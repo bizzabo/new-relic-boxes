@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.3.0/animate.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <title>{{user.name}} Boxes</title>
     <meta name="description" content="New Rekic server / application boxes dashboard">
     <link id="favicon" rel="shortcut icon" type="image/png" href="{{user.favicon}}"/>
@@ -28,14 +29,15 @@
 
     <div class="row">
     <div class="col-xs-6">
-        <div class="row">
-            <h3>Servers</h3>
+        <div class="">
+            <div class="header">Servers</div>
             <div ng-repeat="(key, server) in servers | orderByValue">
-                <h4 class="col-xs-12">{{server.name}}</h4>
+                <h4 class="semi-header col-xs-12">{{server.name}}</h4>
 
                 <div class="">
                     <div ng-repeat="(key, box) in server.data">
-                        <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)">{{box.name}}
+                        <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)">
+                            <span class="box-title">{{box.name}}</span>
                             <span class="inner-box" ng-if="box.reporting">CPU: {{box.summary.cpu}}%</span>
                             <span class="inner-box" ng-if="box.reporting">Fullest Disk : {{box.summary.fullest_disk}}%</span>
                             <span class="inner-box" ng-if="box.reporting">Disk IO: {{box.summary.disk_io}}%</span>
@@ -47,9 +49,10 @@
         </div>
     </div>
         <div class="col-xs-6">
-            <div class="row">
-                <h3>Applications</h3>
-                <button id="setting-button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Settings
+            <div class="">
+                <div class="header">Applications</div>
+                <button id="setting-button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-cog"></i>
                 </button>
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                      aria-hidden="true">
@@ -78,11 +81,12 @@
                     </div>
                 </div>
                 <div ng-repeat="(key, application) in applications | orderByValue">
-                    <h4 class="col-xs-12">{{application.name}}</h4>
+                    <h4 class="semi-header col-xs-12">{{application.name}}</h4>
 
                     <div class="">
                         <div ng-repeat="(key, box) in application.data">
-                            <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)">{{box.name}}
+                            <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)">
+                                <span class="box-title">{{box.name}}</span>
                                 <span class="inner-box" ng-if="box.reporting">Apdex: {{box.application_summary.apdex_score}}</span>
                                 <span class="inner-box" ng-if="box.reporting">Error Rate : {{box.application_summary.error_rate}}%</span>
                                 <span class="inner-box" ng-if="box.reporting">Instances : {{box.application_summary.instance_count}}</span>
