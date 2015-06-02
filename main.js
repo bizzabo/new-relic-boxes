@@ -4,8 +4,8 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
     $scope.grouping = [{type: 'prod', rank: 1}, {type: 'demo', rank: 2}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}];
     $scope.defaultPollingTime = 20000;
 
-    $scope.applicationBoxes = {};
-    $scope.serverBoxes = {};
+    $scope.applications = {};
+    $scope.servers = {};
 
     $scope.user = {
         name: localStorageService.get('name'),
@@ -60,34 +60,17 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
             });
             groupSelected.name = groupSelected.name || 'general';
             groupSelected.rank = groupSelected.rank || 1000;
-            switch (name) {
-                case 'servers':
-                {
-                    if (!$scope.serverBoxes[groupSelected.name]) {
-                        $scope.serverBoxes[groupSelected.name] = {data : {}, rank : groupSelected.rank};
-                    }
-                    var serverData =  $scope.serverBoxes[groupSelected.name].data;
 
-                    if (serverData[res.name] && (serverData[res.name].health_status !== res.health_status) && res.health_status!=='green') {
-                        document.getElementById('soundAlarm').play();
-                    }
-
-                    serverData[res.name] = res;
-                    break;
-                }
-                case 'applications':
-                {
-                    if (!$scope.applicationBoxes[groupSelected.name]) {
-                        $scope.applicationBoxes[groupSelected.name] = {data : {}, rank : groupSelected.rank};
-                    }
-                    var applicationData = $scope.applicationBoxes[groupSelected.name].data;
-                    if (applicationData[res.name] && (applicationData[res.name].health_status !== res.health_status) && res.health_status!=='green') {
-                        document.getElementById('soundAlarm').play();
-                    }
-                    applicationData[res.name] = res;
-                    break;
-                }
+            if (!$scope[name][groupSelected.name]) {
+                $scope[name][groupSelected.name] = {data : {}, rank : groupSelected.rank};
             }
+            var data =  $scope[name][groupSelected.name].data;
+
+            if (data[res.name] && (data[res.name].health_status !== res.health_status) && res.health_status!=='green') {
+                document.getElementById('soundAlarm').play();
+            }
+
+            data[res.name] = res;
         })
     };
 
