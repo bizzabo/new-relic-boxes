@@ -30,7 +30,7 @@
     <div class="row">
     <div class="col-xs-6">
         <div class="">
-            <div class="header">Servers</div>
+            <div class="header">Servers - Total Instances: {{size.servers}}</div>
             <div ng-repeat="(key, server) in servers | orderByValue">
                 <h4 class="semi-header col-xs-12">{{server.name}}</h4>
 
@@ -50,7 +50,7 @@
     </div>
         <div class="col-xs-6">
             <div class="">
-                <div class="header">Applications</div>
+                <div class="header">Applications - Total Instances: {{size.applications}}</div>
                 <button id="setting-button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-cog"></i>
                 </button>

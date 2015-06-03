@@ -6,6 +6,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
 
     $scope.applications = {};
     $scope.servers = {};
+    $scope.size = {};
 
     $scope.user = {
         name: localStorageService.get('name'),
@@ -45,7 +46,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
     };
 
     $scope.parseData = function (data, name) {
-        //name === 'serevrs' ? $scope.serverBoxes = {} : $scope.applicationBoxes = {};
+        $scope.size[name] = data.length;
         _.each(data, function (res) {
             res.name = res.name.toLowerCase();
             var groupSelected = {};

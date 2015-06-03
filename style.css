@@ -64,7 +64,7 @@ body {
 .color-red {
     background-color: #F65177;
 }
-
-.color-grey {
+/*bug in new relic sending grey for servers and gray for applications*/
+.color-grey, .color-gray {
     background-color: #b8bcc8;
 }
