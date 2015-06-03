@@ -75,6 +75,10 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
         })
     };
 
+    $scope.testAlarm = function () {
+        document.getElementById('soundAlarm').play();
+    },
+
     $scope.saveSettings = function () {
         localStorageService.set("apiKey", $scope.user.apiKey);
         localStorageService.set("name", $scope.user.name);
