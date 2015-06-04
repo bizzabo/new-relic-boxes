@@ -27,6 +27,8 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
 
             var serverPoller = poller.get(Resource, { delay: $scope.defaultPollingTime});
             serverPoller.promise.then(null, null, function (data) {
+                var time = new Date();
+                $scope.time = time.getHours() + ':' + time.getMinutes();
                 $scope.parseData(data[pollerType], pollerType);
             });
         })
