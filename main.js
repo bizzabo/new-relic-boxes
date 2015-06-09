@@ -68,7 +68,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
             }
             var data = $scope[pollerType][groupSelected.type].data;
             var previousObject = data[res.name];
-            var shouldAlert = (previousObject && (previousObject.health_status !== res.health_status) && res.health_status!=='green');
+            var shouldAlert = (previousObject && (previousObject.health_status !== res.health_status) && res.health_status !== 'green');
             if (shouldAlert) {
                 document.getElementById('soundAlarm').play();
             }
