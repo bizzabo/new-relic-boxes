@@ -1,7 +1,7 @@
 function MainCtrl($scope, $resource, poller, localStorageService) {
 
     $scope.config = {
-        grouping: [{type: 'prod', rank: 1}, {type: 'demo', rank: 2}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
+        grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
         defaultGroup: {type: 'general', rank: 1000},
         defaultPollingTime: 20000
     };
@@ -69,7 +69,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
             var data = $scope[pollerType][groupSelected.type].data;
             var previousObject = data[res.name];
             var shouldAlert = (previousObject && (previousObject.health_status !== res.health_status) && res.health_status !== 'green');
-            if (shouldAlert) {
+            if (shouldAlert && groupSelected.type.alarm) {
                 document.getElementById('soundAlarm').play();
             }
 
