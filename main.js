@@ -6,8 +6,6 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
         defaultPollingTime: 20 * 1000 * 1000
     };
 
-    var p = ["Marc-André Ter Stegen", "Martín Montoya Torralbo", "Gerard Piqué Bernabeu", "Ivan Rakitic", "Sergio Busquets Burgos", "Xavier Hernández Creus", "Pedro Rodríguez Ledesma", "Andrés Iniesta Luján", "Luis Alberto  Suárez Díaz ", "Lionel Andrés Messi", "Neymar da Silva Santos Júnior", "Rafael Alcántara do Nascimento", "Claudio Bravo", "Javier Alejandro Mascherano", "Marc  Bartra Aregall", "Douglas Pereira dos Santos", "Jordi Alba Ramos", "Sergi Roberto Carnicer", "Adriano Correia Claro", "Daniel Alves da Silva", "Thomas Vermaelen", "Jérémy Mathieu", "Jordi Masip López", "Luis Enrique Martínez"];
-
     $scope.healthCheckRank = {
         green: 0,
         orange: 1,
@@ -75,7 +73,6 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
             var groupSelected = _.find($scope.config.grouping, findByGroupName) || $scope.config.defaultGroup;
 
             res.name = $.trim(res.name.replace(groupSelected.type, '').replace('-',' '));
-            res.name = _.sample(p, 1)[0];
 
             if (!$scope[pollerType][groupSelected.type]) {
                 $scope[pollerType][groupSelected.type] = {
