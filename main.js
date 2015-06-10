@@ -3,7 +3,17 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
     $scope.config = {
         grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
         defaultGroup: {type: 'general', rank: 1000},
-        defaultPollingTime: 20000
+        defaultPollingTime: 20 * 1000 * 1000
+    };
+
+    var p = ["Marc-André Ter Stegen", "Martín Montoya Torralbo", "Gerard Piqué Bernabeu", "Ivan Rakitic", "Sergio Busquets Burgos", "Xavier Hernández Creus", "Pedro Rodríguez Ledesma", "Andrés Iniesta Luján", "Luis Alberto  Suárez Díaz ", "Lionel Andrés Messi", "Neymar da Silva Santos Júnior", "Rafael Alcántara do Nascimento", "Claudio Bravo", "Javier Alejandro Mascherano", "Marc  Bartra Aregall", "Douglas Pereira dos Santos", "Jordi Alba Ramos", "Sergi Roberto Carnicer", "Adriano Correia Claro", "Daniel Alves da Silva", "Thomas Vermaelen", "Jérémy Mathieu", "Jordi Masip López", "Luis Enrique Martínez"];
+
+    $scope.healthCheckRank = {
+        green: 0,
+        orange: 1,
+        red: 2,
+        gray: 3,
+        grey: 3
     };
 
     $scope.applications = {};
@@ -26,14 +36,14 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
                 }
             });
 
-            var serverPoller = poller.get(resource, { delay: $scope.config.defaultPollingTime});
+            var serverPoller = poller.get(resource, { delay: $scope.config.defaultPollingTime, catchError: true});
             serverPoller.promise.then(null, null, function (data) {
                 var time = new Date();
                 var minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes();
                 $scope.time = time.getHours() + ':' + minutes;
                 $('#time-display').toggleClass('color-red', !data.links);
                 if (!data.links) {
-                    $scope.testAlarm();
+                    $scope.playAlarm();
                     return;
                 }
                 $scope.parseData(data[pollerType], pollerType);
@@ -55,6 +65,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
     };
 
     $scope.parseData = function (data, pollerType) {
+        var shouldAlert = false;
         $scope.size[pollerType] = data.length;
         _.each(data, function (res) {
             res.name = res.name.toLowerCase();
@@ -64,6 +75,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
             var groupSelected = _.find($scope.config.grouping, findByGroupName) || $scope.config.defaultGroup;
 
             res.name = $.trim(res.name.replace(groupSelected.type, '').replace('-',' '));
+            res.name = _.sample(p, 1)[0];
 
             if (!$scope[pollerType][groupSelected.type]) {
                 $scope[pollerType][groupSelected.type] = {
@@ -72,18 +84,32 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
                     rank: groupSelected.rank
                 };
             }
-            var data = $scope[pollerType][groupSelected.type].data;
-            var previousObject = data[res.name];
-            var shouldAlert = (previousObject && (previousObject.health_status !== res.health_status) && res.health_status !== 'green');
-            if (shouldAlert && groupSelected.type.alarm) {
-                document.getElementById('soundAlarm').play();
-            }
 
+            var data = $scope[pollerType][groupSelected.type].data;
+            var currentStatus = $scope.healthCheckRank[res.health_status] || 0;
+
+            var previousData = data[res.name] || {};
+            var previousStatus = $scope.healthCheckRank[previousData.health_status] || 0;
+
+            var status = (currentStatus - previousStatus);
+            console.log('status', status);
+            if (groupSelected.alarm && (status > 0)) {
+                shouldAlert = true;
+            }
             data[res.name] = res;
         });
+
+        if (pollerType === 'servers') {
+            $scope.counter++;
+        }
+
+
+        if (shouldAlert) {
+            $scope.playAlarm();
+        }
     };
 
-    $scope.testAlarm = function () {
+    $scope.playAlarm = function () {
         document.getElementById('soundAlarm').play();
     };
 
