@@ -1,8 +1,20 @@
 function MainCtrl($scope, $resource, poller, localStorageService) {
 
-//predefined artists
-    $scope.grouping = [{type: 'prod', rank: 1}, {type: 'demo', rank: 2}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}];
-    $scope.defaultPollingTime = 20000;
+    $scope.config = {
+        grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
+        defaultGroup: {type: 'general', rank: 1000},
+        defaultPollingTime: 20 * 1000 * 1000
+    };
+
+    var p = ["Marc-André Ter Stegen", "Martín Montoya Torralbo", "Gerard Piqué Bernabeu", "Ivan Rakitic", "Sergio Busquets Burgos", "Xavier Hernández Creus", "Pedro Rodríguez Ledesma", "Andrés Iniesta Luján", "Luis Alberto  Suárez Díaz ", "Lionel Andrés Messi", "Neymar da Silva Santos Júnior", "Rafael Alcántara do Nascimento", "Claudio Bravo", "Javier Alejandro Mascherano", "Marc  Bartra Aregall", "Douglas Pereira dos Santos", "Jordi Alba Ramos", "Sergi Roberto Carnicer", "Adriano Correia Claro", "Daniel Alves da Silva", "Thomas Vermaelen", "Jérémy Mathieu", "Jordi Masip López", "Luis Enrique Martínez"];
+
+    $scope.healthCheckRank = {
+        green: 0,
+        orange: 1,
+        red: 2,
+        gray: 3,
+        grey: 3
+    };
 
     $scope.applications = {};
     $scope.servers = {};
@@ -11,28 +23,27 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
     $scope.user = {
         name: localStorageService.get('name'),
         apiKey: localStorageService.get('apiKey'),
-        favicon : localStorageService.get('favicon')
+        favicon: localStorageService.get('favicon')
     };
-
 
     $scope.setPollers = function (pollers) {
         _.each(pollers, function(pollerType) {
-            var Resource = $resource('https://api.newrelic.com/v2/' + pollerType + '.json', {}, {
+            var resource = $resource('https://api.newrelic.com/v2/' + pollerType + '.json', {}, {
                 get: {
-                    method: "Get",
+                    method: 'Get',
                     isArray: false,
                     headers: {'X-Api-Key': $scope.user.apiKey}
                 }
             });
 
-            var serverPoller = poller.get(Resource, { delay: $scope.defaultPollingTime, catchError : true});
+            var serverPoller = poller.get(resource, { delay: $scope.config.defaultPollingTime, catchError: true});
             serverPoller.promise.then(null, null, function (data) {
                 var time = new Date();
                 var minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes();
                 $scope.time = time.getHours() + ':' + minutes;
                 $('#time-display').toggleClass('color-red', !data.links);
                 if (!data.links) {
-                    $scope.testAlarm();
+                    $scope.playAlarm();
                     return;
                 }
                 $scope.parseData(data[pollerType], pollerType);
@@ -40,7 +51,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
         })
     };
 
-    $scope.getBoxClass= function (box) {
+    $scope.getBoxClass = function (box) {
         var color;
         if (!box) return;
         if (!box.health_status && !box.reporting) {
@@ -53,51 +64,66 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
         return 'color-' + color;
     };
 
-    $scope.parseData = function (data, name) {
-        $scope.size[name] = data.length;
+    $scope.parseData = function (data, pollerType) {
+        var shouldAlert = false;
+        $scope.size[pollerType] = data.length;
         _.each(data, function (res) {
             res.name = res.name.toLowerCase();
-            var groupSelected = {};
-            _.each($scope.grouping, function (group) {
-                if (res.name.indexOf(group.type)  > -1) {
-                    groupSelected = {
-                        name : group.type,
-                        rank : group.rank
-                    };
-                    res.name = $.trim(res.name.replace(groupSelected.name, '').replace('-',' '));
-                }
-            });
-            groupSelected.name = groupSelected.name || 'general';
-            groupSelected.rank = groupSelected.rank || 1000;
+            var findByGroupName = function(group) {
+                return (res.name.indexOf(group.type) > -1)
+            };
+            var groupSelected = _.find($scope.config.grouping, findByGroupName) || $scope.config.defaultGroup;
 
-            if (!$scope[name][groupSelected.name]) {
-                $scope[name][groupSelected.name] = {data : {}, rank : groupSelected.rank};
-            }
-            var data =  $scope[name][groupSelected.name].data;
+            res.name = $.trim(res.name.replace(groupSelected.type, '').replace('-',' '));
+            res.name = _.sample(p, 1)[0];
 
-            if (data[res.name] && (data[res.name].health_status !== res.health_status) && res.health_status!=='green') {
-                document.getElementById('soundAlarm').play();
+            if (!$scope[pollerType][groupSelected.type]) {
+                $scope[pollerType][groupSelected.type] = {
+                    data: {},
+                    name: groupSelected.type,
+                    rank: groupSelected.rank
+                };
             }
 
+            var data = $scope[pollerType][groupSelected.type].data;
+            var currentStatus = $scope.healthCheckRank[res.health_status] || 0;
+
+            var previousData = data[res.name] || {};
+            var previousStatus = $scope.healthCheckRank[previousData.health_status] || 0;
+
+            var status = (currentStatus - previousStatus);
+            console.log('status', status);
+            if (groupSelected.alarm && (status > 0)) {
+                shouldAlert = true;
+            }
             data[res.name] = res;
-        })
+        });
+
+        if (pollerType === 'servers') {
+            $scope.counter++;
+        }
+
+
+        if (shouldAlert) {
+            $scope.playAlarm();
+        }
     };
 
-    $scope.testAlarm = function () {
+    $scope.playAlarm = function () {
         document.getElementById('soundAlarm').play();
-    },
+    };
 
     $scope.saveSettings = function () {
-        localStorageService.set("apiKey", $scope.user.apiKey);
-        localStorageService.set("name", $scope.user.name);
-        localStorageService.set("favicon", $scope.user.favicon);
+        localStorageService.set('apiKey', $scope.user.apiKey);
+        localStorageService.set('name', $scope.user.name);
+        localStorageService.set('favicon', $scope.user.favicon);
         $scope.setPollers(['applications', 'servers']);
     };
 
     $scope.setPollers(['applications', 'servers']);
 }
 
-var app = angular.module("myApp", ['ngResource', 'emguo.poller', 'LocalStorageModule']);
+var app = angular.module('myApp', ['ngResource', 'emguo.poller', 'LocalStorageModule']);
 
 app.config(function (localStorageServiceProvider) {
     localStorageServiceProvider
@@ -105,19 +131,9 @@ app.config(function (localStorageServiceProvider) {
 });
 
 app.filter('orderByValue', function () {
-
     return function (obj) {
-        var array = [];
-        Object.keys(obj).forEach(function (key) {
-            // inject key into each object so we can refer to it from the template
-            obj[key].name = key;
-            array.push(obj[key]);
-        });
-        // apply a custom sorting function
-        array.sort(function (a, b) {
-            return a.rank - b.rank;
-        });
-        return array;
+        var array = _.values(obj);
+        return _.sortBy(array, 'rank');
     };
 });
 
