@@ -81,3 +81,14 @@ body {
 .color-grey, .color-gray {
     background-color: #b8bcc8;
 }
+
+@media screen
+and (min-device-width: 800px)
+and (max-device-width: 1600px){
+    .box .box-title {
+        font-size: 9px;
+    }
+    .box .inner-box {
+        font-size: 9px;
+    }
+}

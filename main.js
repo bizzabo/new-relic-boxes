@@ -29,7 +29,13 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
             var serverPoller = poller.get(resource, { delay: $scope.config.defaultPollingTime});
             serverPoller.promise.then(null, null, function (data) {
                 var time = new Date();
-                $scope.time = time.getHours() + ':' + time.getMinutes();
+                var minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes();
+                $scope.time = time.getHours() + ':' + minutes;
+                $('#time-display').toggleClass('color-red', !data.links);
+                if (!data.links) {
+                    $scope.testAlarm();
+                    return;
+                }
                 $scope.parseData(data[pollerType], pollerType);
             });
         })
