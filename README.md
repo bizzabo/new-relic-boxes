@@ -8,8 +8,12 @@ Alarm is played when one of your application / servers health status is changed.
 ## Setup
 
 run index.html
+
 press settings and add the following information:
+
 Your new relic apikey (mandatory).
+
 Your company name (optional).
+
 Your favicon url (optional).
 
