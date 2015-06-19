@@ -1,5 +1,5 @@
 function MainCtrl($scope, $resource, $log, poller,
-    localStorageService, User, BoxService, HEALTH_CHECK_RANK, GROUP_POLLING_CONFIG) {
+    localStorageService, User, BoxService, ServerPoller, HEALTH_CHECK_RANK, GROUP_POLLING_CONFIG) {
     "use strict";
 
     $scope.config = GROUP_POLLING_CONFIG;
@@ -13,19 +13,9 @@ function MainCtrl($scope, $resource, $log, poller,
 
     $scope.setPollers = function (pollers) {
         _.each(pollers, function(pollerType) {
-            var resource = $resource('https://api.newrelic.com/v2/' + pollerType + '.json', {}, {
-                get: {
-                    method: 'Get',
-                    isArray: false,
-                    headers: {'X-Api-Key': $scope.user.apiKey}
-                }
-            });
-
-            var serverPoller = poller.get(resource, { delay: $scope.config.defaultPollingTime, catchError: true});
+            var serverPoller = ServerPoller.getServerPoller();
             serverPoller.promise.then(null, null, function (data) {
-                var time = new Date();
-                var minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes();
-                $scope.time = time.getHours() + ':' + minutes;
+                $scope.time = ServerPoller.getTime();
                 $('#time-display').toggleClass('color-red', !data.links);
                 if (!data.links) {
                     $scope.playAlarm();
