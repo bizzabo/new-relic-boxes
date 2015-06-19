@@ -1,4 +1,5 @@
-function MainCtrl($scope, $resource, poller, localStorageService) {
+function MainCtrl($scope, $resource, poller, localStorageService, User) {
+    "use strict";
 
     $scope.config = {
         grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
@@ -18,11 +19,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
     $scope.servers = {};
     $scope.size = {};
 
-    $scope.user = {
-        name: localStorageService.get('name'),
-        apiKey: localStorageService.get('apiKey'),
-        favicon: localStorageService.get('favicon')
-    };
+    $scope.user = User;
 
     $scope.setPollers = function (pollers) {
         _.each(pollers, function(pollerType) {
@@ -46,7 +43,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
                 }
                 $scope.parseData(data[pollerType], pollerType);
             });
-        })
+        });
     };
 
     $scope.getBoxClass = function (box) {
@@ -68,7 +65,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
         _.each(data, function (res) {
             res.name = res.name.toLowerCase();
             var findByGroupName = function(group) {
-                return (res.name.indexOf(group.type) > -1)
+                return (res.name.indexOf(group.type) > -1);
             };
             var groupSelected = _.find($scope.config.grouping, findByGroupName) || $scope.config.defaultGroup;
 
@@ -111,28 +108,27 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
     };
 
     $scope.saveSettings = function () {
-        localStorageService.set('apiKey', $scope.user.apiKey);
-        localStorageService.set('name', $scope.user.name);
-        localStorageService.set('favicon', $scope.user.favicon);
+        $scope.user.save();
         $scope.setPollers(['applications', 'servers']);
     };
 
     $scope.setPollers(['applications', 'servers']);
 }
 
-var app = angular.module('myApp', ['ngResource', 'emguo.poller', 'LocalStorageModule']);
+function myAppConfig(localStorageServiceProvider) {
+    localStorageServiceProvider.setPrefix('boxes');
+}
 
-app.config(function (localStorageServiceProvider) {
-    localStorageServiceProvider
-        .setPrefix('boxes');
-});
-
-app.filter('orderByValue', function () {
+function filterOrderByValue() {
     return function (obj) {
         var array = _.values(obj);
         return _.sortBy(array, 'rank');
     };
-});
+}
+
+angular.module('myApp', ['ngResource', 'emguo.poller', 'LocalStorageModule'])
+    .config(myAppConfig)
+    .filter('orderByValue', filterOrderByValue);
 
 
 
