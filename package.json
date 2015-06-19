@@ -10,10 +10,14 @@
   "main": "gulp.js",
   "dependencies": {},
   "devDependencies": {
+    "bower": "^1.4.1",
+    "browser-sync": "^2.7.12",
+    "gulp": "^3.9.0",
     "require-dir": "^0.3.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "bower install ; gulp serve"
   },
   "repository": {
     "type": "git",
