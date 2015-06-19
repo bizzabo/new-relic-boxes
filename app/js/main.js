@@ -1,19 +1,9 @@
-function MainCtrl($scope, $resource, $log, poller, localStorageService, User, BoxService) {
+function MainCtrl($scope, $resource, $log, poller,
+    localStorageService, User, BoxService, HEALTH_CHECK_RANK, GROUP_POLLING_CONFIG) {
     "use strict";
 
-    $scope.config = {
-        grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
-        defaultGroup: {type: 'general', rank: 1000},
-        defaultPollingTime: 20 * 1000
-    };
-
-    $scope.healthCheckRank = {
-        green: 0,
-        orange: 1,
-        red: 2,
-        gray: 3,
-        grey: 3
-    };
+    $scope.config = GROUP_POLLING_CONFIG;
+    $scope.healthCheckRank = HEALTH_CHECK_RANK;
 
     $scope.applications = {};
     $scope.servers = {};
@@ -117,6 +107,18 @@ function filterOrderByValue() {
 
 angular.module('myApp', ['ngResource', 'emguo.poller', 'LocalStorageModule'])
     .config(myAppConfig)
+    .constant('HEALTH_CHECK_RANK', {
+        green: 0,
+        orange: 1,
+        red: 2,
+        gray: 3,
+        grey: 3
+    })
+    .value('GROUP_POLLING_CONFIG', {
+        grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
+        defaultGroup: {type: 'general', rank: 1000},
+        defaultPollingTime: 20 * 1000
+    })
     .filter('orderByValue', filterOrderByValue);
 
 
