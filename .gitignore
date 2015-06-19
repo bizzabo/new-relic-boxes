@@ -14,3 +14,6 @@
 # Vendored files
 bower_components/
 node_modules/
+
+# Debug files
+npm-*.log
