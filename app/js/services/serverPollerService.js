@@ -1,4 +1,4 @@
-function serviceServerPoller(NewRelic, GROUP_POLLING_CONFIG) {
+function serviceServerPoller(poller, NewRelic, GROUP_POLLING_CONFIG) {
     var serverPoller, ServerPoller = function() {};
 
     ServerPoller.prototype.getServerPoller = function(pollerType) {

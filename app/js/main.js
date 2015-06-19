@@ -13,7 +13,7 @@ function MainCtrl($scope, $resource, $log, poller,
 
     $scope.setPollers = function (pollers) {
         _.each(pollers, function(pollerType) {
-            var serverPoller = ServerPoller.getServerPoller();
+            var serverPoller = ServerPoller.getServerPoller(pollerType);
             serverPoller.promise.then(null, null, function (data) {
                 $scope.time = ServerPoller.getTime();
                 $('#time-display').toggleClass('color-red', !data.links);
