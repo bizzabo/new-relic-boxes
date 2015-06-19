@@ -1,4 +1,4 @@
-function MainCtrl($scope, $resource, poller, localStorageService, User) {
+function MainCtrl($scope, $resource, $log, poller, localStorageService, User, BoxService) {
     "use strict";
 
     $scope.config = {
@@ -46,18 +46,7 @@ function MainCtrl($scope, $resource, poller, localStorageService, User) {
         });
     };
 
-    $scope.getBoxClass = function (box) {
-        var color;
-        if (!box) return;
-        if (!box.health_status && !box.reporting) {
-            color = 'grey';
-        }
-        else {
-            color = box.health_status;
-        }
-
-        return 'color-' + color;
-    };
+    $scope.getBoxClass = new BoxService().getBoxClass;
 
     $scope.parseData = function (data, pollerType) {
         var shouldAlert = false;
@@ -86,7 +75,7 @@ function MainCtrl($scope, $resource, poller, localStorageService, User) {
             var previousStatus = $scope.healthCheckRank[previousData.health_status] || 0;
 
             var status = (currentStatus - previousStatus);
-            console.log('status', status);
+            $log.debug('status', status);
             if (groupSelected.alarm && (status > 0)) {
                 shouldAlert = true;
             }
