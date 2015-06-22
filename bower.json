@@ -20,7 +20,8 @@
     "jquery": "1.11.0",
     "underscore": "1.7.0",
     "animation.css": "3.3.0",
-    "font-awesome": "4.3.0"
+    "font-awesome": "4.3.0",
+    "alarm": "http://info.ahs.kitasato-u.ac.jp/tkweb/alarm/NPB-290-high.wav"
   },
   "license": "MIT",
   "ignore": [
