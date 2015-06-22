@@ -11,7 +11,7 @@ Alarm is played when one of your application / servers health status is changed.
 - Run `npm install bower` to install bower
 - Run `bower install` to install libraries
 - Run `npm install` to install dependencies
-- Run `npm start` to start the server
+- Run `index.html` (the easiest way) or run `npm start` to start a static server
 
 ## Setup
 
