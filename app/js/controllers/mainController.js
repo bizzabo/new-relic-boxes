@@ -26,17 +26,24 @@ function MainController($scope, $resource, $log, poller,
     $scope.getBoxClass = new BoxService().getBoxClass;
 
     $scope.parseData = function (data, pollerType) {
+        //initialize alert to off.
         var shouldAlert = false;
+        //get amount of servers/applications
         $scope.size[pollerType] = data.length;
         _.each(data, function (res) {
+            //all names to lowercase
             res.name = res.name.toLowerCase();
+            //Finding relevant group name
             var findByGroupName = function(group) {
                 return (res.name.indexOf(group.type) > -1);
             };
+            //Assigning to relevant group. assign to default group if not assigned.
             var groupSelected = _.find(GROUP_POLLING_CONFIG.grouping, findByGroupName) || GROUP_POLLING_CONFIG.defaultGroup;
 
+            //removing '-' char from servers/applications names
             res.name = $.trim(res.name.replace(groupSelected.type, '').replace('-',' '));
 
+            //Creating a group if group was not created. Group are sorted by their rank
             if (!$scope[pollerType][groupSelected.type]) {
                 $scope[pollerType][groupSelected.type] = {
                     data: {},
@@ -46,24 +53,24 @@ function MainController($scope, $resource, $log, poller,
             }
 
             var data = $scope[pollerType][groupSelected.type].data;
+            //get server/application current status (green/orange/red/grey/gray)
             var currentStatus = HEALTH_CHECK_RANK[res.health_status] || 0;
-
+            //get server/application previous data to compare with current
             var previousData = data[res.name] || {};
+            //get server/application previous status (green/orange/red/grey/gray)
             var previousStatus = HEALTH_CHECK_RANK[previousData.health_status] || 0;
-
+            //compare between current & previous status. Negative status means server/application status got worse.
             var status = (currentStatus - previousStatus);
             $log.debug('status', status);
             if (groupSelected.alarm && (status > 0)) {
+                //alert will be played.
                 shouldAlert = true;
             }
+            //update server/application data
             data[res.name] = res;
         });
 
-        if (pollerType === 'servers') {
-            $scope.counter++;
-        }
-
-
+        //playing alert in case should alert set to true.
         if (shouldAlert) {
             $scope.playAlarm();
         }
