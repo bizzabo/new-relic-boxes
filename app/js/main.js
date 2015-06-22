@@ -1,44 +1,21 @@
-function MainCtrl($scope, $resource, poller, localStorageService) {
+function MainCtrl($scope, $resource, $log, poller,
+    localStorageService, User, BoxService, ServerPoller, HEALTH_CHECK_RANK, GROUP_POLLING_CONFIG) {
+    "use strict";
 
-    $scope.config = {
-        grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
-        defaultGroup: {type: 'general', rank: 1000},
-        defaultPollingTime: 20 * 1000
-    };
-
-    $scope.healthCheckRank = {
-        green: 0,
-        orange: 1,
-        red: 2,
-        gray: 3,
-        grey: 3
-    };
+    $scope.config = GROUP_POLLING_CONFIG;
+    $scope.healthCheckRank = HEALTH_CHECK_RANK;
 
     $scope.applications = {};
     $scope.servers = {};
     $scope.size = {};
 
-    $scope.user = {
-        name: localStorageService.get('name'),
-        apiKey: localStorageService.get('apiKey'),
-        favicon: localStorageService.get('favicon')
-    };
+    $scope.user = User;
 
     $scope.setPollers = function (pollers) {
         _.each(pollers, function(pollerType) {
-            var resource = $resource('https://api.newrelic.com/v2/' + pollerType + '.json', {}, {
-                get: {
-                    method: 'Get',
-                    isArray: false,
-                    headers: {'X-Api-Key': $scope.user.apiKey}
-                }
-            });
-
-            var serverPoller = poller.get(resource, { delay: $scope.config.defaultPollingTime, catchError: true});
+            var serverPoller = ServerPoller.getServerPoller(pollerType);
             serverPoller.promise.then(null, null, function (data) {
-                var time = new Date();
-                var minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes();
-                $scope.time = time.getHours() + ':' + minutes;
+                $scope.time = ServerPoller.getTime();
                 $('#time-display').toggleClass('color-red', !data.links);
                 if (!data.links) {
                     $scope.playAlarm();
@@ -46,21 +23,10 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
                 }
                 $scope.parseData(data[pollerType], pollerType);
             });
-        })
+        });
     };
 
-    $scope.getBoxClass = function (box) {
-        var color;
-        if (!box) return;
-        if (!box.health_status && !box.reporting) {
-            color = 'grey';
-        }
-        else {
-            color = box.health_status;
-        }
-
-        return 'color-' + color;
-    };
+    $scope.getBoxClass = new BoxService().getBoxClass;
 
     $scope.parseData = function (data, pollerType) {
         var shouldAlert = false;
@@ -68,7 +34,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
         _.each(data, function (res) {
             res.name = res.name.toLowerCase();
             var findByGroupName = function(group) {
-                return (res.name.indexOf(group.type) > -1)
+                return (res.name.indexOf(group.type) > -1);
             };
             var groupSelected = _.find($scope.config.grouping, findByGroupName) || $scope.config.defaultGroup;
 
@@ -89,7 +55,7 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
             var previousStatus = $scope.healthCheckRank[previousData.health_status] || 0;
 
             var status = (currentStatus - previousStatus);
-            console.log('status', status);
+            $log.debug('status', status);
             if (groupSelected.alarm && (status > 0)) {
                 shouldAlert = true;
             }
@@ -111,28 +77,39 @@ function MainCtrl($scope, $resource, poller, localStorageService) {
     };
 
     $scope.saveSettings = function () {
-        localStorageService.set('apiKey', $scope.user.apiKey);
-        localStorageService.set('name', $scope.user.name);
-        localStorageService.set('favicon', $scope.user.favicon);
+        $scope.user.save();
         $scope.setPollers(['applications', 'servers']);
     };
 
     $scope.setPollers(['applications', 'servers']);
 }
 
-var app = angular.module('myApp', ['ngResource', 'emguo.poller', 'LocalStorageModule']);
+function myAppConfig(localStorageServiceProvider) {
+    localStorageServiceProvider.setPrefix('boxes');
+}
 
-app.config(function (localStorageServiceProvider) {
-    localStorageServiceProvider
-        .setPrefix('boxes');
-});
-
-app.filter('orderByValue', function () {
+function filterOrderByValue() {
     return function (obj) {
         var array = _.values(obj);
         return _.sortBy(array, 'rank');
     };
-});
+}
+
+angular.module('myApp', ['ngResource', 'emguo.poller', 'LocalStorageModule'])
+    .config(myAppConfig)
+    .constant('HEALTH_CHECK_RANK', {
+        green: 0,
+        orange: 1,
+        red: 2,
+        gray: 3,
+        grey: 3
+    })
+    .value('GROUP_POLLING_CONFIG', {
+        grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
+        defaultGroup: {type: 'general', rank: 1000},
+        defaultPollingTime: 20 * 1000
+    })
+    .filter('orderByValue', filterOrderByValue);
 
 
 

@@ -11,3 +11,9 @@
 # Mac files
 *.DS_Store
 
+# Vendored files
+bower_components/
+node_modules/
+
+# Generated files
+app/js/graph.png
