@@ -17,3 +17,6 @@ node_modules/
 
 # Generated files
 app/js/graph.png
+
+# Debug files
+npm-*.log

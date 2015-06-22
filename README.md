@@ -5,9 +5,13 @@ Alarm is played when one of your application / servers health status is changed.
 
 ![New Relic Boxes](/_docs/images/boxes.png?raw=true "Screenshot")
 
-## Setup
+## Installation
 
-run index.html
+- Ensure `node` ^0.10.33 is installed and on your path.
+- Run `npm install` to install dependencies
+- Run `npm start` to start the server
+
+## Setup
 
 press settings and add the following information:
 
