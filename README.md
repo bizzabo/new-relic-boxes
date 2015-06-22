@@ -8,6 +8,8 @@ Alarm is played when one of your application / servers health status is changed.
 ## Installation
 
 - Ensure `node` ^0.10.33 is installed and on your path.
+- Run `npm install bower` to install bower
+- Run `bower install` to install libraries
 - Run `npm install` to install dependencies
 - Run `npm start` to start the server
 
