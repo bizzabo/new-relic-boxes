@@ -1,0 +1,32 @@
+{
+  "name": "new-relic-boxes",
+  "version": "0.0.0",
+  "description": "New Relic Boxes is an html5 dashboard for your R&D team. Boxes lets you monitor your applications and servers on New Relic. Alarm is played when one of your application / servers health status is changed.",
+  "keywords": [
+    "new-relic",
+    "angular",
+    "dashboard"
+  ],
+  "main": "gulp.js",
+  "dependencies": {},
+  "devDependencies": {
+    "bower": "^1.4.1",
+    "browser-sync": "^2.7.12",
+    "gulp": "^3.9.0",
+    "require-dir": "^0.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "bower install ; gulp serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bizzabo/new-relic-boxes.git"
+  },
+  "author": "Daniel Ben Tov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bizzabo/new-relic-boxes/issues"
+  },
+  "homepage": "https://github.com/bizzabo/new-relic-boxes#readme"
+}
