@@ -1,9 +1,6 @@
-function MainCtrl($scope, $resource, $log, poller,
+function MainController($scope, $resource, $log, poller,
     localStorageService, User, BoxService, ServerPoller, HEALTH_CHECK_RANK, GROUP_POLLING_CONFIG) {
     "use strict";
-
-    $scope.config = GROUP_POLLING_CONFIG;
-    $scope.healthCheckRank = HEALTH_CHECK_RANK;
 
     $scope.applications = {};
     $scope.servers = {};
@@ -36,7 +33,7 @@ function MainCtrl($scope, $resource, $log, poller,
             var findByGroupName = function(group) {
                 return (res.name.indexOf(group.type) > -1);
             };
-            var groupSelected = _.find($scope.config.grouping, findByGroupName) || $scope.config.defaultGroup;
+            var groupSelected = _.find(GROUP_POLLING_CONFIG.grouping, findByGroupName) || GROUP_POLLING_CONFIG.defaultGroup;
 
             res.name = $.trim(res.name.replace(groupSelected.type, '').replace('-',' '));
 
@@ -49,10 +46,10 @@ function MainCtrl($scope, $resource, $log, poller,
             }
 
             var data = $scope[pollerType][groupSelected.type].data;
-            var currentStatus = $scope.healthCheckRank[res.health_status] || 0;
+            var currentStatus = HEALTH_CHECK_RANK[res.health_status] || 0;
 
             var previousData = data[res.name] || {};
-            var previousStatus = $scope.healthCheckRank[previousData.health_status] || 0;
+            var previousStatus = HEALTH_CHECK_RANK[previousData.health_status] || 0;
 
             var status = (currentStatus - previousStatus);
             $log.debug('status', status);
@@ -84,36 +81,5 @@ function MainCtrl($scope, $resource, $log, poller,
     $scope.setPollers(['applications', 'servers']);
 }
 
-function myAppConfig(localStorageServiceProvider) {
-    localStorageServiceProvider.setPrefix('boxes');
-}
-
-function filterOrderByValue() {
-    return function (obj) {
-        var array = _.values(obj);
-        return _.sortBy(array, 'rank');
-    };
-}
-
-angular.module('myApp', ['ngResource', 'emguo.poller', 'LocalStorageModule'])
-    .config(myAppConfig)
-    .constant('HEALTH_CHECK_RANK', {
-        green: 0,
-        orange: 1,
-        red: 2,
-        gray: 3,
-        grey: 3
-    })
-    .value('GROUP_POLLING_CONFIG', {
-        grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],
-        defaultGroup: {type: 'general', rank: 1000},
-        defaultPollingTime: 20 * 1000
-    })
-    .filter('orderByValue', filterOrderByValue);
-
-
-
-
-
-
-
+angular.module('myApp')
+    .controller("MainCtrl", MainController);
