@@ -3,7 +3,7 @@
 New Relic Boxes is an html5 dashboard for your R&D team. Boxes lets you monitor your applications and servers on New Relic.
 Alarm is played when one of your application / servers health status is changed.
 
-![New Relic Boxes](/boxes.png?raw=true "Screenshot")
+![New Relic Boxes](/_docs/images/boxes.png?raw=true "Screenshot")
 
 ## Setup
 
