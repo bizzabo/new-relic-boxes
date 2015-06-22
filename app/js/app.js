@@ -15,8 +15,7 @@ angular.module('myApp', ['ngResource', 'emguo.poller', 'LocalStorageModule'])
         green: 0,
         orange: 1,
         red: 2,
-        gray: 3,
-        grey: 3
+        gray: 3
     })
     .value('GROUP_POLLING_CONFIG', {
         grouping: [{type: 'prod', rank: 1, alarm: true}, {type: 'demo', rank: 2, alarm: true}, {type: 'int', rank: 3}, {type: 'dev', rank: 4}],

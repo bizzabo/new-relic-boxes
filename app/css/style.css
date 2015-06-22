@@ -59,6 +59,53 @@ body {
     top: 100px;
     z-index: 2;
 }
+
+.filter-button {
+    position: absolute;
+    right : 10px;
+    z-index: 2;
+}
+
+.filter-button.green {
+    top: 150px;
+    background-image: linear-gradient(to bottom,#9EDDAE 0,#9EDDAE 100%);
+}
+
+.filter-button.green:hover, .filter-button.green:focus {
+    background-color: #9EDDAE;
+}
+
+.filter-button.orange {
+    top: 200px;
+    background-image: linear-gradient(to bottom,#FDD979 0,#FDD979 100%);
+}
+
+.filter-button.orange:hover, .filter-button.orange:focus {
+    background-color: #FDD979;
+}
+
+.filter-button.red {
+    top: 250px;
+    background-image: linear-gradient(to bottom,#F65177 0,#F65177 100%);
+}
+
+.filter-button.red:hover, .filter-button.red:focus {
+    background-color: #F65177;
+}
+
+.filter-button.grey {
+    top: 300px;
+    background-image: linear-gradient(to bottom,#b8bcc8 0,#b8bcc8 100%);
+}
+
+.filter-button.grey:hover, .filter-button.grey:focus {
+    background-color: #b8bcc8;
+}
+
+.fade{
+    opacity: 0.5;
+}
+
 #time-display {
     position: absolute;
     right : 15px;

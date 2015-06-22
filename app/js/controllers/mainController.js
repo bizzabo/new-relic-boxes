@@ -5,6 +5,12 @@ function MainController($scope, $resource, $log, poller,
     $scope.applications = {};
     $scope.servers = {};
     $scope.size = {};
+    $scope.filterBoxes = {
+        'green': false,
+        'orange': false,
+        'red': false,
+        'grey': false
+    };
 
     $scope.user = User;
 
@@ -51,13 +57,16 @@ function MainController($scope, $resource, $log, poller,
                     rank: groupSelected.rank
                 };
             }
-
+            //fix new relic bug. return health_status sometimes as gray and not grey.
+            if  (res.health_status === 'gray') {
+                res.health_status = 'grey';
+            }
             var data = $scope[pollerType][groupSelected.type].data;
-            //get server/application current status (green/orange/red/grey/gray)
+            //get server/application current status (green/orange/red/grey)
             var currentStatus = HEALTH_CHECK_RANK[res.health_status] || 0;
             //get server/application previous data to compare with current
             var previousData = data[res.name] || {};
-            //get server/application previous status (green/orange/red/grey/gray)
+            //get server/application previous status (green/orange/red/grey)
             var previousStatus = HEALTH_CHECK_RANK[previousData.health_status] || 0;
             //compare between current & previous status. Negative status means server/application status got worse.
             var status = (currentStatus - previousStatus);

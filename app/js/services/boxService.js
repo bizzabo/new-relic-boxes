@@ -7,6 +7,7 @@ function factoryBoxService() {
         color = box.health_status;
         if (!box.health_status && !box.reporting) {
             color = 'grey';
+            box.health_status = color;
         }
 
         return ['color', color].join("-");

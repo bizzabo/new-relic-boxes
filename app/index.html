@@ -31,7 +31,7 @@
 
                     <div>
                         <div ng-repeat="(key, box) in server.data">
-                            <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)">
+                            <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)" ng-hide="filterBoxes[box.health_status]">
                                 <span class="box-title">{{box.name}}</span>
                                 <span class="inner-box" ng-if="box.reporting">CPU: {{box.summary.cpu}}%</span>
                                 <span class="inner-box" ng-if="box.reporting">Fullest Disk : {{box.summary.fullest_disk}}%</span>
@@ -52,6 +52,18 @@
                 </button>
                 <button id="play-button" ng-click="playAlarm()" class="btn btn-info">
                     <i class="fa fa-play"></i>
+                </button>
+                <button class="filter-button green btn btn-info" ng-click="filterBoxes.green = !filterBoxes.green" ng-model="filterBoxes.green" ng-class="{fade: filterBoxes.green}">
+                    <i class="fa fa-filter"></i>
+                </button>
+                <button class="filter-button orange btn btn-info" ng-click="filterBoxes.orange = !filterBoxes.orange" ng-model="filterBoxes.orange" ng-class="{fade: filterBoxes.orange}">
+                    <i class="fa fa-filter"></i>
+                </button>
+                <button class="filter-button red btn btn-info" ng-click="filterBoxes.red = !filterBoxes.red" ng-model="filterBoxes.red" ng-class="{fade: filterBoxes.red}">
+                    <i class="fa fa-filter"></i>
+                </button>
+                <button class="filter-button grey btn btn-info" ng-click="filterBoxes.grey = !filterBoxes.grey" ng-model="filterBoxes.grey" ng-class="{fade: filterBoxes.grey}">
+                    <i class="fa fa-filter"></i>
                 </button>
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                      aria-hidden="true">
@@ -84,7 +96,7 @@
 
                     <div>
                         <div ng-repeat="(key, box) in application.data">
-                            <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)">
+                            <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)" ng-hide="filterBoxes[box.health_status]">
                                 <span class="box-title">{{box.name}}</span>
                                 <span class="inner-box" ng-if="box.reporting">Apdex: {{box.application_summary.apdex_score}}</span>
                                 <span class="inner-box" ng-if="box.reporting">Error Rate: {{box.application_summary.error_rate}}%</span>
