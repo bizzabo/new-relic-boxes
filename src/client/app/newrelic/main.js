@@ -2,7 +2,7 @@
     "use strict";
 
     /* @ngInject */
-    function MainController($scope, $log, poller, localStorageService, User,
+    function MainController($scope, $log, User,
         BoxService, ServerPoller, HEALTH_CHECK_RANK, GROUP_POLLING_CONFIG,
         $, _) {
 
