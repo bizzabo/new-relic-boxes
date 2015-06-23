@@ -9,10 +9,10 @@ gulp.task('css-watch', browserSync.reload);
 gulp.task('browser-sync', function() {
     browserSync.init({
         server: {
-            baseDir: "./app"
+            baseDir: "./src/client"
         }
     });
 
-    gulp.watch("./app/js/*.js", ['js-watch']);
-    gulp.watch("./app/css/*.css", ['css-watch']);
+    gulp.watch(["./src/client/js/*.js", "./src/client/app/*.js"], ['js-watch']);
+    gulp.watch("./src/client/css/*.css", ['css-watch']);
 });
