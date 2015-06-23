@@ -1,6 +1,11 @@
 (function() {
     "use strict";
 
+    angular.module("app.newrelic")
+        .factory("NewRelic", serviceNewRelic);
+
+    serviceNewRelic.$inject = ["$resource", "User"];
+
     /* @ngInject */
     function serviceNewRelic($resource, User) {
         var newRelic, NewRelic = function() {};
@@ -20,6 +25,4 @@
         return newRelic;
     }
 
-    angular.module("app.newrelic")
-        .factory("NewRelic", serviceNewRelic);
 }());

@@ -1,6 +1,12 @@
 (function() {
     "use strict";
 
+    angular
+        .module("app.filters")
+        .filter("orderByValue", filterOrderByValue);
+
+    filterOrderByValue.$inject = ["_"];
+
     /* @ngInject */
     function filterOrderByValue(_) {
         return function (obj) {
@@ -9,7 +15,4 @@
         };
     }
 
-    angular
-        .module("app.filters")
-        .filter("orderByValue", filterOrderByValue);
 }());

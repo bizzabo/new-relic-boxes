@@ -1,6 +1,8 @@
 (function() {
     "use strict";
 
+    localStorageConfig.$inject = ["localStorageServiceProvider"];
+
     /* @ngInject */
     function localStorageConfig(localStorageServiceProvider) {
         localStorageServiceProvider.setPrefix('boxes');

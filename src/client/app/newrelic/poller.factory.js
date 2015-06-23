@@ -1,6 +1,12 @@
 (function() {
     "use strict";
 
+    angular
+        .module("app.newrelic")
+        .factory("ServerPoller", serviceServerPoller);
+
+    serviceServerPoller.$inject = ["poller", "NewRelic", "GROUP_POLLING_CONFIG"];
+
     /* @ngInject */
     function serviceServerPoller(poller, NewRelic, GROUP_POLLING_CONFIG) {
         var serverPoller, ServerPoller = function() {};
@@ -21,7 +27,4 @@
         return serverPoller;
     }
 
-    angular
-        .module("app.newrelic")
-        .factory("ServerPoller", serviceServerPoller);
 }());

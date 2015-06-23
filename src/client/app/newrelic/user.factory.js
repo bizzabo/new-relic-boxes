@@ -1,6 +1,12 @@
 (function() {
     "use strict";
 
+    angular
+        .module("app.newrelic")
+        .factory("User", userModel);
+
+    userModel.$inject = ["localStorageService"];
+
     /* @ngInject */
     function userModel(localStorageService) {
         var User, user;
@@ -21,7 +27,4 @@
 
     }
 
-    angular
-        .module("app.newrelic")
-        .factory("User", userModel);
 }());
