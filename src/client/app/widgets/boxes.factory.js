@@ -1,6 +1,10 @@
 (function() {
     "use strict";
 
+    angular
+        .module("app.widgets")
+        .factory("BoxService", factoryBoxService);
+
     /* @ngInject */
     function factoryBoxService() {
         var BoxService = function() {};
@@ -20,7 +24,4 @@
         return BoxService;
     }
 
-    angular
-        .module("app.widgets")
-        .factory("BoxService", factoryBoxService);
 }());

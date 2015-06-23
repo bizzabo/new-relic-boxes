@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  ng-app="app" ng-controller="MainCtrl">
+<html  ng-app="app" ng-controller="MainCtrl" ng-strict-di>
 
 <head>
     <meta name="viewport" content="width=device-width ,height=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
@@ -136,18 +136,18 @@
 
 <!-- Filters -->
 <script src="app/filters/filters.module.js"></script>
-<script src="app/filters/orderByValue.js"></script>
+<script src="app/filters/orderByValue.filter.js"></script>
 
 <!-- New Relic -->
 <script src="app/newrelic/newrelic.module.js"></script>
-<script src="app/newrelic/main.js"></script>
-<script src="app/newrelic/poller.js"></script>
-<script src="app/newrelic/resource.js"></script>
-<script src="app/newrelic/user.js"></script>
+<script src="app/newrelic/main.controller.js"></script>
+<script src="app/newrelic/poller.factory.js"></script>
+<script src="app/newrelic/resource.factory.js"></script>
+<script src="app/newrelic/user.factory.js"></script>
 
 <!-- Widgets / Boxes -->
 <script src="app/widgets/widgets.module.js"></script>
-<script src="app/widgets/boxes.js"></script>
+<script src="app/widgets/boxes.factory.js"></script>
 
 </body>
 

@@ -1,6 +1,14 @@
 (function() {
     "use strict";
 
+    angular
+        .module("app.newrelic")
+        .controller("MainCtrl", MainController);
+
+    MainController.$inject = ["$scope", "$log", "User",
+        "BoxService", "ServerPoller", "HEALTH_CHECK_RANK", "GROUP_POLLING_CONFIG",
+        "$", "_"];
+
     /* @ngInject */
     function MainController($scope, $log, User,
         BoxService, ServerPoller, HEALTH_CHECK_RANK, GROUP_POLLING_CONFIG,
@@ -101,7 +109,4 @@
         $scope.setPollers(['applications', 'servers']);
     }
 
-    angular
-        .module("app.newrelic")
-        .controller("MainCtrl", MainController);
 }());
