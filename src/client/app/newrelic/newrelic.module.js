@@ -3,8 +3,8 @@
 
     angular
         .module("app.newrelic", [
+            "emguo.poller",
             "ngResource",
-            "LocalStorageModule",
-            "app.filters"
+            "LocalStorageModule"
         ]);
 }());

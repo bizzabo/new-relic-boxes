@@ -13,6 +13,13 @@
     <link rel="stylesheet" type="text/css" href="content/css/style.css">
 
     <title>{{user.name}} Boxes</title>
+    <style>
+        /* This helps the ng-show/ng-hide animations start at the right place. */
+        /* Since Angular has this but needs to load, this gives us the class early. */
+        .ng-hide {
+            display: none!important;
+        }
+    </style>
     <meta name="description" content="New Relic server / application boxes dashboard">
     <link id="favicon" rel="shortcut icon" type="image/png" href="{{user.favicon}}"/>
 </head>
