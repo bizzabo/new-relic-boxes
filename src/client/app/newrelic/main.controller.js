@@ -43,6 +43,8 @@
 
         $scope.getBoxClass = new BoxService().getBoxClass;
 
+        $scope.goToLink = new BoxService().goToLink;
+
         $scope.parseData = function (data, pollerType) {
             //initialize alert to off.
             var shouldAlert = false;
@@ -72,6 +74,10 @@
                 //fix new relic bug. return health_status sometimes as gray and not grey.
                 if  (res.health_status === 'gray') {
                     res.health_status = 'grey';
+                }
+                //add new relic link
+                if ($scope.user.accountId) {
+                    res.link = 'https://rpm.newrelic.com/accounts/' + $scope.user.accountId+ '/' + pollerType + '/' + res.id;
                 }
                 var data = $scope[pollerType][groupSelected.type].data;
                 //get server/application current status (green/orange/red/grey)

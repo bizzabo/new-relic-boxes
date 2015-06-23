@@ -23,3 +23,4 @@ Your company name (optional).
 
 Your favicon url (optional).
 
+Your new relic account id (optional) - to open a new tab with your specific box on new relic app.

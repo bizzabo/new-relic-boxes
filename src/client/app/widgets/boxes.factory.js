@@ -21,6 +21,15 @@
             return ['color', color].join("-");
         };
 
+        BoxService.prototype.goToLink = function (box) {
+            if (!box.link) {
+                alert('Add your account id to open a new tab with the desired box on new relic app');
+                return;
+            }
+            var win = window.open(box.link, '_blank');
+            win.focus();
+        };
+
         return BoxService;
     }
 
