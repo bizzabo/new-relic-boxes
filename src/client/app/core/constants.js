@@ -5,7 +5,7 @@
         green: 0,
         orange: 1,
         red: 2,
-        gray: 3
+        grey: 3
     };
 
     angular
