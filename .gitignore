@@ -17,6 +17,8 @@ node_modules/
 
 # Generated files
 app/js/graph.png
+_docs/*
+!_docs/images/boxes.png
 
 # Debug files
 npm-*.log
