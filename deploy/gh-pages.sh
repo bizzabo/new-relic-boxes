@@ -1,6 +1,7 @@
 #!/bin/bash
-npm install -g gulp; npm install
-( cd ../_docs
+npm install -g gulp bower;
+( cd _docs
+ gulp ngdocs
  git init
  git config user.name "Travis-CI"
  git add .
