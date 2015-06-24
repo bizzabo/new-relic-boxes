@@ -2,7 +2,12 @@
     "use strict";
 
     /**
-     * @desc Parent control encapsulating additional controls, meant to be floated
+     * @ngdoc directive
+     * @name  app.widgets:floatingControls
+     * @module widgets
+     * @restrict E
+     *
+     * @description Parent control encapsulating additional controls, meant to be floated
      * @example <floating-controls></floating-controls>
      */
     angular

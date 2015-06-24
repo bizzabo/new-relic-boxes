@@ -2,7 +2,12 @@
     "use strict";
 
     /**
-     * @desc Parent control for a collection of boxes designed to display application status
+     * @ngdoc directive
+     * @name  app.widgets:applicationContainer
+     * @module  widgets
+     * @restrict E
+     *
+     * @description Parent control for a collection of boxes designed to display application status
      * @example <application-container></application-container>
      */
     angular

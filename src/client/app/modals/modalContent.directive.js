@@ -2,7 +2,12 @@
     "use strict";
 
     /**
-     * @desc Parent control for a modal template housing user settings
+     * @ngdoc directive
+     * @name app.modals:modalContent
+     * @module modals
+     * @restrict E
+     *
+     * @description Parent control for a modal template housing user settings
      * @example <modal-content></modal-content>
      */
     angular

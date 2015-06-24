@@ -1,6 +1,14 @@
 (function() {
     "use strict";
 
+    /**
+     * @ngdoc filter
+     * @name  app.filters:orderByValue
+     * @module filters
+     * @function
+     *
+     * @description Order by rank filter
+     */
     angular
         .module("app.filters")
         .filter("orderByValue", filterOrderByValue);

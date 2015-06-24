@@ -2,7 +2,12 @@
     "use strict";
 
     /**
-     * @desc Parent control for a collection of boxes designed to display server status
+     * @ngdoc directive
+     * @name app.widgets:serverContainer
+     * @module widgets
+     * @restrict E
+     *
+     * @description Parent control for a collection of boxes designed to display server status
      * @example <server-container></server-container>
      */
     angular

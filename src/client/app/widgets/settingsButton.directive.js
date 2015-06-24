@@ -2,7 +2,12 @@
     "use strict";
 
     /**
-     * @desc Control designed to trigger a state transition to manage settings
+     * @ngdoc directive
+     * @name  app.widgets:settingsButton
+     * @module  widgets
+     * @restrict E
+     *
+     * @description Control designed to trigger a state transition to manage settings
      * @example <settings-button></settings-button>
      */
     angular
