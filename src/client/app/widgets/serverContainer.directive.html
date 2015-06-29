@@ -1,0 +1,18 @@
+<div>
+    <div class="header">Servers - Total Instances: {{size.servers}}</div>
+    <div ng-repeat="(key, server) in servers | orderByValue">
+        <h4 class="semi-header col-xs-12">{{server.name}}</h4>
+
+        <div>
+            <div ng-repeat="(key, box) in server.data">
+                <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)" ng-hide="filterBoxes[box.health_status]" ng-click="goToLink(box)">
+                    <span class="box-title">{{box.name}}</span>
+                    <span class="inner-box" ng-if="box.reporting">CPU: {{box.summary.cpu}}%</span>
+                    <span class="inner-box" ng-if="box.reporting">Fullest Disk : {{box.summary.fullest_disk}}%</span>
+                    <span class="inner-box" ng-if="box.reporting">Disk IO: {{box.summary.disk_io}}%</span>
+                    <span class="inner-box" ng-if="box.reporting">Memory: {{box.summary.memory}}%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
