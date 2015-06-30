@@ -31,125 +31,19 @@
 
     <div class="row">
         <div class="col-xs-6">
-            <div>
-                <div class="header">Servers - Total Instances: {{size.servers}}</div>
-                <div ng-repeat="(key, server) in servers | orderByValue">
-                    <h4 class="semi-header col-xs-12">{{server.name}}</h4>
-
-                    <div>
-                        <div ng-repeat="(key, box) in server.data">
-                            <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)" ng-hide="filterBoxes[box.health_status]" ng-click="goToLink(box)">
-                                <span class="box-title">{{box.name}}</span>
-                                <span class="inner-box" ng-if="box.reporting">CPU: {{box.summary.cpu}}%</span>
-                                <span class="inner-box" ng-if="box.reporting">Fullest Disk : {{box.summary.fullest_disk}}%</span>
-                                <span class="inner-box" ng-if="box.reporting">Disk IO: {{box.summary.disk_io}}%</span>
-                                <span class="inner-box" ng-if="box.reporting">Memory: {{box.summary.memory}}%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <server-container>
         </div>
         <div class="col-xs-6">
-            <div>
-                <div class="header">Applications - Total Instances: {{size.applications}}</div>
-                <div id="time-display">{{time}}</div>
-                <button id="setting-button" class="btn btn-info" data-toggle="modal" data-target="#myModal">
-                    <i class="fa fa-cog"></i>
-                </button>
-                <button id="play-button" ng-click="playAlarm()" class="btn btn-info">
-                    <i class="fa fa-play"></i>
-                </button>
-                <button class="filter-button green btn btn-info" ng-click="filterBoxes.green = !filterBoxes.green" ng-model="filterBoxes.green" ng-class="{fade: filterBoxes.green}">
-                    <i class="fa fa-filter"></i>
-                </button>
-                <button class="filter-button orange btn btn-info" ng-click="filterBoxes.orange = !filterBoxes.orange" ng-model="filterBoxes.orange" ng-class="{fade: filterBoxes.orange}">
-                    <i class="fa fa-filter"></i>
-                </button>
-                <button class="filter-button red btn btn-info" ng-click="filterBoxes.red = !filterBoxes.red" ng-model="filterBoxes.red" ng-class="{fade: filterBoxes.red}">
-                    <i class="fa fa-filter"></i>
-                </button>
-                <button class="filter-button grey btn btn-info" ng-click="filterBoxes.grey = !filterBoxes.grey" ng-model="filterBoxes.grey" ng-class="{fade: filterBoxes.grey}">
-                    <i class="fa fa-filter"></i>
-                </button>
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Settings</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div>
-                                    <label>Company Name</label>
-                                    <input type="text" class="form-control" ng-model="user.name" placeholder="Company Name">
-                                    <label>Favicon</label>
-                                    <input type="text" class="form-control" ng-model="user.favicon" placeholder="Company favicon">
-                                    <label>New Relic Api Key</label>
-                                    <input type="text" class="form-control"  ng-model="user.apiKey" placeholder="New Relic Api Key">
-                                    <label>New Relic Account Id</label>
-                                    <input type="text" class="form-control"  ng-model="user.accountId" placeholder="New Relic Account Id">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="saveSettings()">Save Changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div ng-repeat="(key, application) in applications | orderByValue">
-                    <h4 class="semi-header col-xs-12">{{application.name}}</h4>
-
-                    <div>
-                        <div ng-repeat="(key, box) in application.data">
-                            <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)" ng-hide="filterBoxes[box.health_status]" ng-click="goToLink(box)">
-                                <span class="box-title">{{box.name}}</span>
-                                <span class="inner-box" ng-if="box.reporting">Apdex: {{box.application_summary.apdex_score}}</span>
-                                <span class="inner-box" ng-if="box.reporting">Error Rate: {{box.application_summary.error_rate}}%</span>
-                                <span class="inner-box" ng-if="box.reporting">Instances: {{box.application_summary.instance_count}}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <application-container></application-container>
         </div>
     </div>
 </div>
 
-<!-- Javascript -->
-<script src="bower_components/angular/angular.min.js"></script>
-<script src="bower_components/angular-resource/angular-resource.min.js"></script>
-<script src="bower_components/underscore/underscore-min.js"></script>
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/angular-poller/angular-poller.min.js"></script>
-<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
+<modal-content></modal-content>
 
 <!-- Application Bootstrapping -->
-<script src="app/app.module.js"></script>
-
-<!-- Application Core -->
-<script src="app/core/core.module.js"></script>
-<script src="app/core/config.js"></script>
-<script src="app/core/constants.js"></script>
-
-<!-- Filters -->
-<script src="app/filters/filters.module.js"></script>
-<script src="app/filters/orderByValue.filter.js"></script>
-
-<!-- New Relic -->
-<script src="app/newrelic/newrelic.module.js"></script>
-<script src="app/newrelic/main.controller.js"></script>
-<script src="app/newrelic/poller.factory.js"></script>
-<script src="app/newrelic/resource.factory.js"></script>
-<script src="app/newrelic/user.factory.js"></script>
-
-<!-- Widgets / Boxes -->
-<script src="app/widgets/widgets.module.js"></script>
-<script src="app/widgets/boxes.factory.js"></script>
+<script src="dist/vendor.min.js"></script>
+<script src="dist/app.min.js"></script>
 
 </body>
 

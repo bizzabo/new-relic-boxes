@@ -5,6 +5,7 @@
         .module("app", [
             "app.core",
             "app.filters",
+            "app.modals",
             "app.newrelic",
             "app.widgets"
         ]);
