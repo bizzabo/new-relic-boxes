@@ -37,18 +37,16 @@ body {
     padding-left: 10px;
     padding-top: 2px;
     cursor: pointer;
-}
 
-.box {
     .box-title {
-      font-weight: bold;
-      font-size: 13px;
-      display: block;
+        font-weight: bold;
+        font-size: 13px;
+        display: block;
     }
 
     .inner-box {
-      font-size: 11px;
-      display: block;
+        font-size: 11px;
+        display: block;
     }
 }
 
