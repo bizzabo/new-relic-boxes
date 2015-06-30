@@ -1,0 +1,9 @@
+# Save as .codeclimate.yml (note leading .) in project root directory
+languages:
+  JavaScript: true
+exclude_paths:
+- "node_modules/*"
+- "bower_components/*"
+- "gulp/*"
+- "_docs/*"
+- "deploy/*"

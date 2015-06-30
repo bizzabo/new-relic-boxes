@@ -20,5 +20,7 @@ app/js/graph.png
 _docs/*
 !_docs/images/boxes.png
 
+src/client/dist/
+
 # Debug files
 npm-*.log
