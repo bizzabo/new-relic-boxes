@@ -20,7 +20,7 @@ function vendorJS(){
         .pipe(uglify())
         .pipe(rename({suffix:".min"}))
         .pipe(sourcemaps.write())
-        .pipe(gulp.dest("./src/client/dist/"));
+        .pipe(gulp.dest("./src/client/dist/js/"));
 }
 
 function concatJS() {
@@ -43,5 +43,5 @@ function concatJS() {
     .pipe(uglify())
     .pipe(rename({suffix:".min"}))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest("./src/client/dist/"));
+    .pipe(gulp.dest("./src/client/dist/js/"));
 }

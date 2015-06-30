@@ -39,15 +39,17 @@ body {
     cursor: pointer;
 }
 
-.box .box-title {
-    font-weight: bold;
-    font-size: 13px;
-    display: block;
-}
+.box {
+    .box-title {
+      font-weight: bold;
+      font-size: 13px;
+      display: block;
+    }
 
-.box .inner-box {
-    font-size: 11px;
-    display: block;
+    .inner-box {
+      font-size: 11px;
+      display: block;
+    }
 }
 
 #setting-button {
@@ -67,42 +69,42 @@ body {
     position: absolute;
     right : 10px;
     z-index: 2;
-}
 
-.filter-button.green {
-    top: 150px;
-    background-image: linear-gradient(to bottom,#9EDDAE 0,#9EDDAE 100%);
-}
+    &.green {
+        top: 150px;
+        background-image: linear-gradient(to bottom,#9EDDAE 0,#9EDDAE 100%);
 
-.filter-button.green:hover, .filter-button.green:focus {
-    background-color: #9EDDAE;
-}
+        &:hover, &:focus {
+            background-color: #9EDDAE;
+        }
+    }
 
-.filter-button.orange {
-    top: 200px;
-    background-image: linear-gradient(to bottom,#FDD979 0,#FDD979 100%);
-}
+    &.orange {
+        top: 200px;
+        background-image: linear-gradient(to bottom,#FDD979 0,#FDD979 100%);
 
-.filter-button.orange:hover, .filter-button.orange:focus {
-    background-color: #FDD979;
-}
+        &:hover, &:focus {
+            background-color: #FDD979;
+        }
+    }
 
-.filter-button.red {
-    top: 250px;
-    background-image: linear-gradient(to bottom,#F65177 0,#F65177 100%);
-}
+    &.red {
+        top: 250px;
+        background-image: linear-gradient(to bottom,#F65177 0,#F65177 100%);
 
-.filter-button.red:hover, .filter-button.red:focus {
-    background-color: #F65177;
-}
+        &:hover, &:focus {
+            background-color: #F65177;
+        }
+    }
 
-.filter-button.grey {
-    top: 300px;
-    background-image: linear-gradient(to bottom,#b8bcc8 0,#b8bcc8 100%);
-}
+    &.grey {
+        top: 300px;
+        background-image: linear-gradient(to bottom,#b8bcc8 0,#b8bcc8 100%);
 
-.filter-button.grey:hover, .filter-button.grey:focus {
-    background-color: #b8bcc8;
+        &:hover, &:focus {
+            background-color: #b8bcc8;
+        }
+    }
 }
 
 .fade{
@@ -116,29 +118,34 @@ body {
     z-index: 2;
 }
 
-.color-green {
-    background-color: #9EDDAE;
-}
+.color {
+  &-green {
+      background-color: #9EDDAE;
+  }
 
-.color-orange {
-    background-color: #FDD979;
-}
+  &-orange {
+      background-color: #FDD979;
+  }
 
-.color-red {
-    background-color: #F65177;
-}
-/*bug in new relic sending grey for servers and gray for applications*/
-.color-grey, .color-gray {
-    background-color: #b8bcc8;
+  &-red {
+      background-color: #F65177;
+  }
+  /*bug in new relic sending grey for servers and gray for applications*/
+  &-grey, &-gray {
+      background-color: #b8bcc8;
+  }
 }
 
 @media screen
 and (min-device-width: 800px)
 and (max-device-width: 1600px){
-    .box .box-title {
+    .box {
+      .box-title {
+          font-size: 9px;
+      }
+
+     .inner-box {
         font-size: 9px;
     }
-    .box .inner-box {
-        font-size: 9px;
-    }
+  }
 }
