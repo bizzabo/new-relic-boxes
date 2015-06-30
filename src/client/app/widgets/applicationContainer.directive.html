@@ -1,9 +1,5 @@
 <div>
     <div class="header">Applications - Total Instances: {{size.applications}}</div>
-    <!-- This is aside, could be floated on top of viewport -->
-    <!-- aside -->
-    <floating-controls></floating-controls>
-    <!-- /aside -->
     <div ng-repeat="(key, application) in applications | orderByValue">
         <h4 class="semi-header col-xs-12">{{application.name}}</h4>
 
