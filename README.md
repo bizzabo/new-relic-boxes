@@ -1,5 +1,7 @@
 #New Relic Boxes
 
+[![Code Climate](https://codeclimate.com/github/buzzedword/new-relic-boxes/badges/gpa.svg)](https://codeclimate.com/github/buzzedword/new-relic-boxes) [![Build Status](https://travis-ci.org/buzzedword/new-relic-boxes.svg?branch=master)](https://travis-ci.org/buzzedword/new-relic-boxes)
+
 New Relic Boxes is an html5 dashboard for your R&D team. Boxes lets you monitor your applications and servers on New Relic.
 Alarm is played when one of your application / servers health status is changed.
 
