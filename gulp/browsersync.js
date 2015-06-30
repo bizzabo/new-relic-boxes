@@ -1,8 +1,6 @@
 var gulp = require("gulp"),
     browserSync = require('browser-sync').create();
 
-
-gulp.task('js-watch', browserSync.reload);
 gulp.task('css-watch', browserSync.reload);
 
 // Static server
