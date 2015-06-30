@@ -1,0 +1,56 @@
+html {
+font-family: 'arial';
+}
+
+
+body {
+    background-color: #EEEFF4;
+}
+
+.header{
+    background-color: #FFFFFF;
+    color: #51AEDA;
+    font-weight: 400;
+    height: 50px;
+    font-size: 24px;
+    margin-left: -15px;
+    padding-left: 15px;
+    margin-right: -15px;
+    padding-right: 15px;
+}
+
+.semi-header {
+    color: #A7A7BA;
+    margin-left: -14px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+#myModal{
+    color : #555;
+}
+
+
+#setting-button {
+    position: absolute;
+    right : 10px;
+    z-index: 2;
+}
+
+#play-button {
+    position: absolute;
+    right : 10px;
+    top: 100px;
+    z-index: 2;
+}
+
+.fade{
+    opacity: 0.5;
+}
+
+#time-display {
+    position: absolute;
+    right : 15px;
+    top: 15px;
+    z-index: 2;
+}

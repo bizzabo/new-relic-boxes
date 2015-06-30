@@ -1,0 +1,41 @@
+.filter-button {
+    position: absolute;
+    right : 10px;
+    z-index: 2;
+
+    &.green {
+        top: 150px;
+        background-image: linear-gradient(to bottom,#9EDDAE 0,#9EDDAE 100%);
+
+        &:hover, &:focus {
+            background-color: #9EDDAE;
+        }
+    }
+
+    &.orange {
+        top: 200px;
+        background-image: linear-gradient(to bottom,#FDD979 0,#FDD979 100%);
+
+        &:hover, &:focus {
+            background-color: #FDD979;
+        }
+    }
+
+    &.red {
+        top: 250px;
+        background-image: linear-gradient(to bottom,#F65177 0,#F65177 100%);
+
+        &:hover, &:focus {
+            background-color: #F65177;
+        }
+    }
+
+    &.grey {
+        top: 300px;
+        background-image: linear-gradient(to bottom,#b8bcc8 0,#b8bcc8 100%);
+
+        &:hover, &:focus {
+            background-color: #b8bcc8;
+        }
+    }
+}

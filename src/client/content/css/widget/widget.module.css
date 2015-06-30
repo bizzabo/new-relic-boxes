@@ -1,0 +1,33 @@
+.box {
+    height: 85px;
+    margin: 1px;
+    font-size: 15px;
+    padding-left: 10px;
+    padding-top: 2px;
+    cursor: pointer;
+
+    .box-title {
+        font-weight: bold;
+        font-size: 13px;
+        display: block;
+    }
+
+    .inner-box {
+        font-size: 11px;
+        display: block;
+    }
+}
+
+@media screen
+and (min-device-width: 800px)
+and (max-device-width: 1600px){
+    .box {
+      .box-title {
+          font-size: 9px;
+      }
+
+     .inner-box {
+        font-size: 9px;
+    }
+  }
+}

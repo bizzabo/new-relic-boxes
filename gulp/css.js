@@ -1,5 +1,6 @@
 var gulp = require("gulp"),
     postcss = require("gulp-postcss"),
+    concat = require("gulp-concat"),
     browserSync = require('browser-sync').create();
 
 gulp.task('css-watch', ["css-build"], browserSync.reload);
@@ -13,7 +14,15 @@ function cssPostCSS() {
     require("postcss-nested")
   ];
 
-  return gulp.src("./src/client/content/css/*.css")
+  var client = "./src/client/content/css/";
+
+  var files = [
+    client + '**/*.module.css',
+    client + '**/*.css'
+  ];
+
+  return gulp.src(files)
     .pipe(postcss(plugins))
+    .pipe(concat("style.css"))
     .pipe(gulp.dest("./src/client/dist/css/"));
 }

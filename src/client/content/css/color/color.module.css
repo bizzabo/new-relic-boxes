@@ -1,0 +1,17 @@
+.color {
+  &-green {
+      background-color: #9EDDAE;
+  }
+
+  &-orange {
+      background-color: #FDD979;
+  }
+
+  &-red {
+      background-color: #F65177;
+  }
+  /*bug in new relic sending grey for servers and gray for applications*/
+  &-grey, &-gray {
+      background-color: #b8bcc8;
+  }
+}
