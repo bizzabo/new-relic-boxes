@@ -17,10 +17,14 @@
     "gulp-debug": "^2.0.1",
     "gulp-ng-annotate": "^1.0.0",
     "gulp-ngdocs": "^0.2.10",
+    "gulp-postcss": "^5.1.9",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",
     "main-bower-files": "^2.8.2",
+    "postcss-mixins": "^0.3.0",
+    "postcss-nested": "^0.3.2",
+    "postcss-simple-vars": "^0.3.0",
     "require-dir": "^0.3.0"
   },
   "scripts": {
