@@ -8,7 +8,7 @@
                 <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)" ng-hide="filterBoxes[box.health_status]" ng-click="goToLink(box)">
                     <span class="box-title">{{box.name}}</span>
                     <span class="inner-box" ng-if="box.reporting">Apdex: {{box.application_summary.apdex_score}}</span>
-                    <span class="inner-box" ng-if="box.reporting">Error Rate: {{box.application_summary.error_rate}}%</span>
+                    <span class="inner-box" ng-if="box.reporting">Error Rate: {{box.application_summary.error_rate * 100 | number:2}}%</span>
                     <span class="inner-box" ng-if="box.reporting">Instances: {{box.application_summary.instance_count}}</span>
                 </div>
             </div>
