@@ -1,0 +1,17 @@
+<div>
+    <div class="header">Applications - Total Instances: {{size.applications}}</div>
+    <div ng-repeat="(key, application) in applications | orderByValue">
+        <h4 class="semi-header col-xs-12">{{application.name}}</h4>
+
+        <div>
+            <div ng-repeat="(key, box) in application.data">
+                <div class="col-xs-2 box animated fadeIn" ng-class="getBoxClass(box)" ng-hide="filterBoxes[box.health_status]" ng-click="goToLink(box)">
+                    <span class="box-title">{{box.name}}</span>
+                    <span class="inner-box" ng-if="box.reporting">Apdex: {{box.application_summary.apdex_score}}</span>
+                    <span class="inner-box" ng-if="box.reporting">Error Rate: {{box.application_summary.error_rate}}%</span>
+                    <span class="inner-box" ng-if="box.reporting">Instances: {{box.application_summary.instance_count}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
