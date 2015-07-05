@@ -34,7 +34,7 @@ body {
 #setting-button {
     position: absolute;
     right : 10px;
-    top: 50px
+    top: 50px;
     z-index: 2;
 }
 
