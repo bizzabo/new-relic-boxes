@@ -7,12 +7,12 @@
 
     MainController.$inject = ["$scope", "$log", "User",
         "BoxService", "ServerPoller", "HEALTH_CHECK_RANK", "GROUP_POLLING_CONFIG",
-        "$", "_"];
+        "$", "_", "GroupService"];
 
     /* @ngInject */
     function MainController($scope, $log, User,
         BoxService, ServerPoller, HEALTH_CHECK_RANK, GROUP_POLLING_CONFIG,
-        $, _) {
+        $, _, GroupService) {
 
         $scope.applications = {};
         $scope.servers = {};
@@ -53,13 +53,8 @@
             _.each(data, function (res) {
                 //all names to lowercase
                 res.name = res.name.toLowerCase();
-                //Finding relevant group name
-                var findByGroupName = function(group) {
-                    return (res.name.indexOf(group.type) > -1);
-                };
-                //Assigning to relevant group. assign to default group if not assigned.
-                var groupSelected = _.find(GROUP_POLLING_CONFIG.grouping, findByGroupName) || GROUP_POLLING_CONFIG.defaultGroup;
 
+                var groupSelected = GroupService.findByGroupName(res);
                 //removing '-' char from servers/applications names
                 res.name = $.trim(res.name.replace(groupSelected.type, '').replace('-',' '));
 
