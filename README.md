@@ -1,4 +1,4 @@
-#New Relic Boxes
+# New Relic Boxes
 
 [![Code Climate](https://codeclimate.com/github/buzzedword/new-relic-boxes/badges/gpa.svg)](https://codeclimate.com/github/buzzedword/new-relic-boxes) [![Build Status](https://travis-ci.org/buzzedword/new-relic-boxes.svg?branch=master)](https://travis-ci.org/buzzedword/new-relic-boxes)
 
